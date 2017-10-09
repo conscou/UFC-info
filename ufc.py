@@ -22,7 +22,7 @@ def get_fighter_profile(fighter_name_input):
 		print "\b"
 
 
-		#stats
+		#stats and stuff
 		skill_breakdown = fighter_soup.find('div', class_="skill-breakdown").find_all('td', class_="value")
 		striking_and_grappling_percentage = fighter_soup.find_all('div', class_="bar-text")
 		striking_defense = fighter_soup.find('div', id="striking-defense-percentage-area").find("div", class_="number-area")
