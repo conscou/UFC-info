@@ -91,12 +91,6 @@ def get_ufc_schedule():
 
 		count = 0
 
-		#there is a "hidden" list of times in the current markup for the UFC website
-		#Actual fight times for listed fights start at index 20 -- must work on a
-		#workaround for this
-
-		time_count = 20
-
 		print "UFC FIGHT SCHEDULE"
 		print "*** Schedule is subject to change ***"
 		print "\b"
@@ -105,21 +99,16 @@ def get_ufc_schedule():
 
 			#prints event title
 			print events[count].text.strip()
-
-
-			#case to handle if there is no listed time
-			if event_times[time_count].text.replace("ETPT", '').strip() == '':
-				print event_dates[count].text.strip() + " @ " + "Time TBD"
-			#case to handle when time is listed
-			else:
-				print event_dates[count].text.strip() + " @ " + event_times[time_count].text.replace("ETPT", '').strip() + " ET/PT"
 			
+			#prints event date
+			print event_dates[count].text.strip()
+			
+			#prints location
 			print location_arena[count].text
 			print event_locations[count].text.replace(location_arena[count].text, '')
 
 			print "\b"
 			count = count+1
-			time_count = time_count+1
 
 			#check in case table is longer than actual events presented
 			if count > len(events):
@@ -130,3 +119,5 @@ def get_ufc_schedule():
 		print "Error in accessing schedule"
 
 
+
+get_ufc_schedule()
