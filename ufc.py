@@ -1,8 +1,26 @@
 import re
 import urllib
 import requests 
-from ufc_utilities import *
 from bs4 import BeautifulSoup
+
+#method to get a fighter's webpage on UFC site
+def get_fighter_page(fighter_name):
+	
+	fighter_name_input_web = fighter_name.replace(' ', '-')
+	fighter_page = "http://www.ufc.com/fighter/" + fighter_name_input_web
+
+	try:
+
+		fighter_request = urllib.request.Request(fighter_page)
+		fighter_soup = BeautifulSoup(urllib.request.urlopen(fighter_request), "html.parser")
+
+		return fighter_soup
+
+	except urllib.error.HTTPError as e:
+
+		print ("Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly")
+		return
+
 
 
 #method to get the stats of a single fighter
@@ -68,22 +86,13 @@ def get_fighter_profile(fighter_name_input):
 #compare fighters
 def compare_fighters(first_fighter, second_fighter):
 
-	first_fighter_name_input_web = first_fighter.replace(' ', '-')
-	first_fighter_web = "http://www.ufc.com/fighter/" + first_fighter_name_input_web
-
-	second_fighter_name_input_web = second_fighter.replace(' ', '-')
-	second_fighter_web = "http://www.ufc.com/fighter/" + second_fighter_name_input_web
-
-
 	try:
 
 		#gets webpage of the first fighter inputted
-		first_fighter_request = urllib.request.Request(first_fighter_web)
-		first_fighter_soup = BeautifulSoup(urllib.urlopen(first_fighter_request), "html.parser")
+		first_fighter_soup = get_fighter_page(first_fighter)
 
 		#gets webpage of the second fighter inputted
-		second_fighter_request = urllib.request.Request(second_fighter_web)
-		second_fighter_soup = BeautifulSoup(urllib.urlopen(second_fighter_request), "html.parser")
+		second_fighter_soup = get_fighter_page(second_fighter)
 
 		print (first_fighter + " vs " + second_fighter)
 		print ("------")
@@ -159,9 +168,6 @@ def compare_fighters(first_fighter, second_fighter):
 
 		print ("Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly")
 
-	
-
-
 
 #method to get the schedule of upcoming fights
 def get_ufc_schedule():
@@ -208,3 +214,4 @@ def get_ufc_schedule():
 
 		print ("Error in accessing schedule")
 
+	
