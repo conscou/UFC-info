@@ -1,5 +1,5 @@
 import re
-import urllib2
+import urllib
 import requests 
 from ufc_utilities import *
 from bs4 import BeautifulSoup
@@ -13,9 +13,9 @@ def get_fighter_profile(fighter_name_input):
 	fighter_soup = get_fighter_page(fighter_name_input)
 	fighter_name_input = fighter_name_input.title()
 
-	print fighter_name_input
-	print "------"
-	print "\b"
+	print (fighter_name_input)
+	print ("------")
+	print ("\b")
 
 
 	#stats and stuff
@@ -27,11 +27,11 @@ def get_fighter_profile(fighter_name_input):
 	info_label = fighter_soup.find('div', class_="fighter-info").find_all('td', class_="label")
 
 
-	print "Record: " + skill_breakdown[0].text
-	print "Summary: " + skill_breakdown[1].text
+	print ("Record: " + skill_breakdown[0].text)
+	print ("Summary: " + skill_breakdown[1].text)
 	
-	print "\b"
-	print "Striking Percentage: " + striking_and_grappling_percentage[0].text.strip()[0:3]
+	print ("\b")
+	print ("Striking Percentage: " + striking_and_grappling_percentage[0].text.strip()[0:3])
 
 
 
@@ -44,24 +44,24 @@ def get_fighter_profile(fighter_name_input):
 
 	while find_grappling_index <= len(striking_and_grappling_percentage):
 		if "Successful" in striking_and_grappling_percentage[find_grappling_index].text:
-			print "Takedown Percentage: " + " ".join(striking_and_grappling_percentage[find_grappling_index].text.split())[0:3]
+			print ("Takedown Percentage: " + " ".join(striking_and_grappling_percentage[find_grappling_index].text.split())[0:3])
 			break
 		else :
 			find_grappling_index = find_grappling_index+1
 
 
 	#resume consistent indexes for getting into
-	print "Striking Defense (The percentage of total strikes avoided): " + striking_defense.text.strip()
-	print "Takedown Defense (The percentage of total takedowns avoided): " + takedown_defense.text.strip()
-	print "\b"
+	print ("Striking Defense (The percentage of total strikes avoided): " + striking_defense.text.strip())
+	print ("Takedown Defense (The percentage of total takedowns avoided): " + takedown_defense.text.strip())
+	print ("\b")
 
 
 	index = 0;
 	for info in fighter_info:
-		print " ".join(info_label[index].text.split()) + " " + " ".join(info.text.split())
+		print (" ".join(info_label[index].text.split()) + " " + " ".join(info.text.split()))
 		index = index + 1
 	
-	print "\b"
+	print ("\b")
 
 
 
@@ -78,16 +78,16 @@ def compare_fighters(first_fighter, second_fighter):
 	try:
 
 		#gets webpage of the first fighter inputted
-		first_fighter_request = urllib2.Request(first_fighter_web)
-		first_fighter_soup = BeautifulSoup(urllib2.urlopen(first_fighter_request), "html.parser")
+		first_fighter_request = urllib.request.Request(first_fighter_web)
+		first_fighter_soup = BeautifulSoup(urllib.urlopen(first_fighter_request), "html.parser")
 
 		#gets webpage of the second fighter inputted
-		second_fighter_request = urllib2.Request(second_fighter_web)
-		second_fighter_soup = BeautifulSoup(urllib2.urlopen(second_fighter_request), "html.parser")
+		second_fighter_request = urllib.request.Request(second_fighter_web)
+		second_fighter_soup = BeautifulSoup(urllib.urlopen(second_fighter_request), "html.parser")
 
-		print first_fighter + " vs " + second_fighter
-		print "------"
-		print "\b"
+		print (first_fighter + " vs " + second_fighter)
+		print ("------")
+		print ("\b")
 
 
 		#skill breakdown for both fighters
@@ -95,15 +95,15 @@ def compare_fighters(first_fighter, second_fighter):
 		first_skill_breakdown = first_fighter_soup.find('div', class_="skill-breakdown").find_all('td', class_="value")
 		second_skill_breakdown = second_fighter_soup.find('div', class_="skill-breakdown").find_all('td', class_="value")
 
-		print first_fighter + "'s Record: " + first_skill_breakdown[0].text
-		print second_fighter + "'s Record: " + second_skill_breakdown[0].text
+		print (first_fighter + "'s Record: " + first_skill_breakdown[0].text)
+		print (second_fighter + "'s Record: " + second_skill_breakdown[0].text)
 
-		print "\b"
+		print ("\b")
 
-		print first_fighter + "'s Speciality: " + first_skill_breakdown[1].text
-		print second_fighter + "'s Speciality: " + second_skill_breakdown[1].text
+		print (first_fighter + "'s Speciality: " + first_skill_breakdown[1].text)
+		print (second_fighter + "'s Speciality: " + second_skill_breakdown[1].text)
 
-		print "\b"
+		print ("\b")
 
 
 		#striking and grappling for both fighters
@@ -119,7 +119,7 @@ def compare_fighters(first_fighter, second_fighter):
 
 		while first_grappling_index <= len(first_striking_and_grappling_percentage):
 			if "Successful" in first_striking_and_grappling_percentage[first_grappling_index].text:
-				print "Takedown Percentage for " + first_fighter + ": " + " ".join(first_striking_and_grappling_percentage[first_grappling_index].text.split())[0:3]
+				print ("Takedown Percentage for " + first_fighter + ": " + " ".join(first_striking_and_grappling_percentage[first_grappling_index].text.split())[0:3])
 				break
 			else :
 				first_grappling_index = first_grappling_index+1
@@ -127,12 +127,12 @@ def compare_fighters(first_fighter, second_fighter):
 
 		while second_grappling_index <= len(second_striking_and_grappling_percentage):
 			if "Successful" in second_striking_and_grappling_percentage[second_grappling_index].text:
-				print "Takedown Percentage for " + second_fighter + ": " + " ".join(second_striking_and_grappling_percentage[second_grappling_index].text.split())[0:3]
+				print ("Takedown Percentage for " + second_fighter + ": " + " ".join(second_striking_and_grappling_percentage[second_grappling_index].text.split())[0:3])
 				break
 			else :
 				second_grappling_index = second_grappling_index+1
 
-		print "\b"
+		print ("\b")
 
 		#striking defense for both fighters
 
@@ -146,18 +146,18 @@ def compare_fighters(first_fighter, second_fighter):
 		second_takedown_defense = second_fighter_soup.find('div', id="takedown-defense-percentage")
 
 
-		print "Striking Defense for " + first_fighter + ": " + first_striking_defense.text.strip()
-		print "Striking Defense for " + second_fighter + ": " + second_striking_defense.text.strip()
+		print ("Striking Defense for " + first_fighter + ": " + first_striking_defense.text.strip())
+		print ("Striking Defense for " + second_fighter + ": " + second_striking_defense.text.strip())
 
-		print "\b"
+		print ("\b")
 
-		print "Takedown Defense for " + first_fighter + ": " + first_takedown_defense.text.strip()
-		print "Takedown Defense for " + second_fighter + ": " + second_takedown_defense.text.strip()
+		print ("Takedown Defense for " + first_fighter + ": " + first_takedown_defense.text.strip())
+		print ("Takedown Defense for " + second_fighter + ": " + second_takedown_defense.text.strip())
 
 		
-	except urllib2.HTTPError, e:
+	except urllib.error.HTTPError as e:
 
-		print "Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly"
+		print ("Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly")
 
 	
 
@@ -168,8 +168,8 @@ def get_ufc_schedule():
 
 	try:
 
-		schedule_request = urllib2.Request("http://www.ufc.com/schedule/event")
-		schedule_soup = BeautifulSoup(urllib2.urlopen(schedule_request), "html.parser")
+		schedule_request = urllib.request.Request("http://www.ufc.com/schedule/event")
+		schedule_soup = BeautifulSoup(urllib.request.urlopen(schedule_request), "html.parser")
 
 		table_events = schedule_soup.find('div', class_="tab-content")
 
@@ -181,30 +181,30 @@ def get_ufc_schedule():
 
 		count = 0
 
-		print "UFC FIGHT SCHEDULE"
-		print "*** Schedule is subject to change ***"
-		print "\b"
+		print ("UFC FIGHT SCHEDULE")
+		print ("*** Schedule is subject to change ***")
+		print ("\b")
 
 		for an_event in events:
 
 			#prints event title
-			print events[count].text.strip()
+			print (events[count].text.strip())
 			
 			#prints event date
-			print event_dates[count].text.strip()
+			print (event_dates[count].text.strip())
 			
 			#prints location
-			print location_arena[count].text
-			print event_locations[count].text.replace(location_arena[count].text, '')
+			print (location_arena[count].text)
+			print (event_locations[count].text.replace(location_arena[count].text, ''))
 
-			print "\b"
+			print ("\b")
 			count = count+1
 
 			#check in case table is longer than actual events presented
 			if count > len(events):
 				break
 
-	except urllib2.HTTPError, e:
+	except urllib.error.HTTPError as e:
 
-		print "Error in accessing schedule"
+		print ("Error in accessing schedule")
 

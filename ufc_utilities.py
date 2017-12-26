@@ -1,5 +1,5 @@
 import re
-import urllib2
+import urllib
 import requests 
 from bs4 import BeautifulSoup
 
@@ -11,12 +11,12 @@ def get_fighter_page(fighter_name):
 
 	try:
 
-		fighter_request = urllib2.Request(fighter_page)
-		fighter_soup = BeautifulSoup(urllib2.urlopen(fighter_request), "html.parser")
+		fighter_request = urllib.request.Request(fighter_page)
+		fighter_soup = BeautifulSoup(urllib.request.urlopen(fighter_request), "html.parser")
 
 		return fighter_soup
 
-	except urllib2.HTTPError, e:
+	except urllib.error.HTTPError as e:
 
-		print "Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly"
+		print ("Either there is no record for this fighter/the fighter does not exist, or the name you are providing is not spelled correctly")
 		return
